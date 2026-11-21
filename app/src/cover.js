@@ -345,15 +345,14 @@ function drawPanel(ctx, info, panelState, grade, H) {
   drawTag(ctx, info, panelState.tag, H);
 }
 
-/** The pop-out pass: the hero photo again, above its panel's top edge, over the frame. */
+/**
+ * The pop-out pass: the hero photo again, above its panel's top edge, over the frame.
+ * Deliberately no drop shadow: the pop polygon overlaps the panel's own photo, so a
+ * shadow offset from it could only ever peek out along the pop's bottom edge — a stray
+ * translucent band across the panel photo — while everywhere else the photo covers it.
+ */
 function drawPopOut(ctx, info, panelState, grade, H) {
   if (!info.popPoly || !panelState.photo) return;
-  ctx.save();
-  ctx.translate(0, H * 0.014);
-  pathPoly(ctx, info.popPoly);
-  ctx.fillStyle = 'rgba(0, 0, 0, 0.45)';
-  ctx.fill();
-  ctx.restore();
   ctx.save();
   pathPoly(ctx, info.popPoly);
   ctx.clip();

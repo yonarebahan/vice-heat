@@ -60,7 +60,18 @@ function loadImage(url) {
   });
 }
 
+// Set for a ?shot=cover page: the canvas becomes the whole viewport and render()
+// paints the finished cover through the clean export path (see the scene bootstrap).
+let coverShot = false;
+
 function render() {
+  if (coverShot) {
+    if (canvas.width !== window.innerWidth) canvas.width = window.innerWidth;
+    if (canvas.height !== window.innerHeight) canvas.height = window.innerHeight;
+    lastPanels = computePanels(layoutById(state.layoutId), canvas.width, canvas.height);
+    drawCover(canvas, state, { preview: false, panels: lastPanels });
+    return;
+  }
   lastPanels = computePanels(layoutById(state.layoutId), canvas.width, canvas.height);
   drawCover(canvas, state, { preview: true, panels: lastPanels });
 }
@@ -380,6 +391,15 @@ async function applyScene(spec) {
 const params = new URLSearchParams(location.search);
 const shot = params.get('shot');
 if (shot) {
+  if (shot === 'cover') {
+    // The cover alone fills the viewport at the viewport's own aspect — no editor
+    // chrome, no letterbox — so a screenshot of the page is the exported art itself.
+    coverShot = true;
+    canvas.style.width = '100vw';
+    canvas.style.height = '100vh';
+    canvas.style.display = 'block';
+    window.addEventListener('resize', render);
+  }
   runShot(shot, params, applyScene);
 } else {
   applyScene({

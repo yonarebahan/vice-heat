@@ -1,7 +1,9 @@
-// Fixed scenes for screenshots: ?shot=cover shows the finished cover alone, edge to edge;
-// ?shot=editor shows the studio with a scene loaded. The scene comes from the query —
-// `layout`, `grade`, `title` and `subtitle` — and main.js applies it with the bundled
-// samples. window.__shotReady is set once the scene is painted.
+// Fixed scenes for screenshots: ?shot=cover shows the finished cover alone, edge to edge
+// (main.js sizes the canvas to the viewport and paints it through the clean export
+// path — no selection outline, no editor UI); ?shot=editor shows the studio with a
+// scene loaded. The scene comes from the query — `layout`, `grade`, `title` and
+// `subtitle` — and main.js applies it with the bundled samples. window.__shotReady
+// is set once the scene is painted.
 export async function runShot(shot, query, applyScene) {
   if (shot === 'cover') document.body.classList.add('shot-cover');
   await applyScene({

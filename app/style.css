@@ -1,0 +1,258 @@
+/* VICE HEAT — Cover Studio. A dark editor shell around the cover: near-black panels,
+   neon-pink and sunset-orange accents, everything offline system fonts. */
+
+:root {
+  --bg: #0a0a10;
+  --panel: #14141d;
+  --panel-2: #1b1b27;
+  --line: #2a2a3a;
+  --text: #f2f0ea;
+  --muted: #9a97a8;
+  --pink: #ff2e88;
+  --orange: #ffa751;
+  --teal: #22d3ee;
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+  min-height: 100vh;
+}
+
+.app { display: flex; flex-direction: column; min-height: 100vh; }
+
+/* ---------------------------------------------------------------- top bar */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 20px;
+  background: linear-gradient(90deg, #17101f, #14141d 55%, #101820);
+  border-bottom: 1px solid var(--line);
+}
+
+.brand { display: flex; align-items: center; gap: 14px; }
+
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 10px;
+  font-weight: 900;
+  font-style: italic;
+  font-size: 19px;
+  color: #0a0a10;
+  background: linear-gradient(160deg, #ffe259 0%, #ffa751 34%, #ff2e88 68%, #22d3ee 100%);
+  box-shadow: 0 4px 18px rgba(255, 46, 136, 0.4);
+}
+
+.brand h1 {
+  margin: 0;
+  font-size: 22px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-style: italic;
+}
+
+.brand p { margin: 2px 0 0; color: var(--muted); font-size: 12.5px; }
+.topbar-note { margin: 0; color: var(--muted); font-size: 12.5px; white-space: nowrap; }
+
+/* ---------------------------------------------------------------- layout */
+.workspace { display: flex; flex: 1; min-height: 0; }
+
+.sidebar {
+  width: 322px;
+  flex: 0 0 322px;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: var(--panel);
+  border-right: 1px solid var(--line);
+}
+
+.sidebar section {
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 13px 14px 15px;
+}
+
+.sidebar h2 {
+  margin: 0 0 10px;
+  font-size: 11.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+
+.sidebar label {
+  display: block;
+  font-size: 12.5px;
+  color: var(--muted);
+  margin-top: 10px;
+}
+
+.sidebar input[type="text"] {
+  width: 100%;
+  margin-top: 5px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: #0d0d14;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.sidebar input[type="text"]:focus { outline: 2px solid var(--pink); outline-offset: 0; }
+
+button {
+  appearance: none;
+  border: 1px solid var(--line);
+  background: #23232f;
+  color: var(--text);
+  border-radius: 8px;
+  padding: 7px 11px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, transform 0.05s;
+}
+
+button:hover { border-color: var(--pink); }
+button:active { transform: translateY(1px); }
+button.active {
+  background: linear-gradient(160deg, rgba(255, 46, 136, 0.28), rgba(255, 167, 81, 0.22));
+  border-color: var(--pink);
+  color: #fff;
+}
+
+.btn-grid { display: flex; flex-wrap: wrap; gap: 7px; }
+.row { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 10px; }
+
+.file-btn {
+  display: block;
+  text-align: center;
+  padding: 10px;
+  border-radius: 9px;
+  background: linear-gradient(90deg, var(--pink), #ff5e62, var(--orange));
+  color: #fff !important;
+  font-weight: 700;
+  font-size: 14px !important;
+  cursor: pointer;
+  margin-top: 0 !important;
+}
+
+.sample-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 11px;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+/* ---------------------------------------------------------------- filmstrip */
+.filmstrip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 11px;
+  min-height: 8px;
+}
+
+.thumb {
+  position: relative;
+  width: 62px;
+  height: 62px;
+  padding: 0;
+  border-radius: 9px;
+  overflow: hidden;
+  border: 2px solid var(--line);
+  background: #0d0d14;
+}
+
+.thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.thumb:hover { border-color: var(--teal); }
+.thumb.in-panel { border-color: var(--pink); box-shadow: 0 0 0 2px rgba(255, 46, 136, 0.35); }
+
+.hint { color: var(--muted); font-size: 12px; line-height: 1.45; margin: 10px 0 0; }
+
+.slider-row { display: flex !important; align-items: center; gap: 10px; }
+.slider-row input[type="range"] { flex: 1; accent-color: var(--pink); }
+.slider-row span { font-size: 12.5px; color: var(--text); min-width: 44px; text-align: right; }
+
+.grades button { display: flex; align-items: center; gap: 8px; }
+.swatch {
+  width: 16px;
+  height: 16px;
+  border-radius: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  flex: 0 0 16px;
+}
+
+#status { color: var(--teal); font-size: 12.5px; min-height: 16px; margin: 10px 0 0; }
+
+/* ---------------------------------------------------------------- stage */
+.stage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 22px;
+  background:
+    radial-gradient(900px 500px at 70% -10%, rgba(255, 46, 136, 0.13), transparent 60%),
+    radial-gradient(800px 500px at 10% 110%, rgba(34, 211, 238, 0.10), transparent 60%),
+    #08080d;
+  min-width: 0;
+}
+
+.stage.dragging { outline: 2px dashed var(--pink); outline-offset: -10px; }
+
+#cover {
+  height: min(78vh, 100%);
+  max-width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 6px;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.75), 0 0 0 1px #000, 0 0 44px rgba(255, 46, 136, 0.14);
+  cursor: grab;
+  touch-action: none;
+  background: #060609;
+}
+
+#cover:active { cursor: grabbing; }
+.stage-hint { color: var(--muted); font-size: 12.5px; margin: 0; }
+
+/* ---------------------------------------------------------------- narrow screens */
+@media (max-width: 860px) {
+  .workspace { flex-direction: column; }
+  .sidebar { width: auto; flex: none; order: 2; }
+  .stage { order: 1; }
+  #cover { height: auto; width: min(92vw, 560px); }
+  .topbar-note { display: none; }
+}
+
+/* ---------------------------------------------------------------- screenshot mode */
+/* ?shot=cover: the cover alone, edge to edge, nothing else on the page. */
+body.shot-cover .topbar,
+body.shot-cover .sidebar,
+body.shot-cover .stage-hint { display: none; }
+
+body.shot-cover .workspace { display: block; }
+body.shot-cover .stage { padding: 0; background: #060609; }
+body.shot-cover #cover {
+  width: 100vmin;
+  height: 100vmin;
+  border-radius: 0;
+  box-shadow: none;
+}
